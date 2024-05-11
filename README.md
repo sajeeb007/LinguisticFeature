@@ -1,10 +1,12 @@
 # Thesis on Neural Machine Translation with Linguistic Features on French to English Translation
 This repository contains the code and resources for my B.Tech's thesis, which investigates the integration of linguistic features such as part-of-speech (POS) tags, named entity recognition (NER), and lemmatization into machine translation systems. The goal of this research is to improve the quality of translations between French and English by leveraging these linguistic insights.
+<br />
 
 ## Introduction
 Machine translation has made significant strides in recent years, but there are still challenges in producing accurate and coherent translations, especially in specific domains or contexts. This research explores the potential of incorporating linguistic features, such as POS tags, NER, and lemmatization, into the source language (French) to enhance the quality of translations into the target language (English).
 
 The core idea is to enrich the input sentences with additional linguistic information, which can provide valuable context and disambiguate ambiguities that might otherwise lead to translation errors. By integrating these features into the source sentences, the machine translation system can potentially learn better representations and produce more accurate and coherent translations.
+<br />
 
 ## Repository Structure
 
@@ -13,13 +15,14 @@ This repository contains the following main components:
 - `addpos.py`: A script to add POS tags to the source (French) sentences.
 - `addner.py`: A script to perform named entity recognition (NER) on the source sentences and annotate them accordingly.
 - `split.py`: A utility script to split the dataset into training, validation, and test sets.
-- `opennmt_installation.md`: A guide on how to install and set up the [OpenNMT-py](https://opennmt.net/OpenNMT-py/) machine translation toolkit, which is used for training and evaluation in this research.
+- `config_baseline.yaml`: Configuration to build vocab and run the entire training
+- `readme.md`: A guide on how to install and set up the [OpenNMT-py](https://opennmt.net/OpenNMT-py/) machine translation toolkit, which is used for training and evaluation in this research.
 
 Additionally, the repository includes the dataset used in this research, which is a subset of the Common Corpus dataset, as well as pre-trained models and other relevant resources.
 
 In the following sections, we will provide more details on how to use these scripts, install the required dependencies, and reproduce the experiments from the thesis.
 
-
+<br />
 
 ## Adding POS Tags
 
@@ -36,7 +39,7 @@ This script will process the input file and generate a new file with POS tags ad
 Note that the POS tags are added to make the data compatible with OpenNMT-py's linguistic feature integration.
 
 
-
+<br />
 
 ## Adding Named Entity Recognition
 
@@ -53,7 +56,7 @@ This script will process the input file and generate a new file with named entit
 In this example, the named entities "Paris" and "France" are annotated with the `B-LOC` (Beginning of Location) tag.
 
 
-
+<br />
 
 ## Splitting the Dataset
 
@@ -67,7 +70,7 @@ This script will split the input file into three separate files for training, va
 
 
 
-
+<br />
 
 ## OpenNMT-py Installation
 
@@ -78,17 +81,22 @@ OpenNMT-py is the machine translation toolkit used for training and evaluation i
    ```
    pip install OpenNMT-py
    ```
+<br />
 
-3.  (Optional) Some advanced features (e.g., working with pretrained models or specific transforms) require extra packages. You can install them by downloading the `requirements.opt.txt` file from the [OpenNMT-py repository](https://github.com/OpenNMT/OpenNMT-py/blob/master/requirements.opt.txt) and running:
+2.  (Optional) Some advanced features (e.g., working with pretrained models or specific transforms) require extra packages. You can install them by downloading the `requirements.opt.txt` file from the [OpenNMT-py repository](https://github.com/OpenNMT/OpenNMT-py/blob/master/requirements.opt.txt) and running:
 
        ```
        pip install -r requirements.opt.txt
        ```
+<br />
+3. After installing OpenNMT-py and the necessary dependencies, you can proceed with training and evaluating your machine translation models using the preprocessed data from the previous steps.
+<br />
 
-5. After installing OpenNMT-py and the necessary dependencies, you can proceed with training and evaluating your machine translation models using the preprocessed data from the previous steps.
+
 
 
 ## Training
+
 ### Build Vocabulary
 
 Instead of using individual command-line arguments, we have a configuration file named `config_pos.yaml` that contains all the settings we've used during our training.
@@ -101,9 +109,9 @@ onmt_build_vocab -config config_pos.yaml -n_sample 10000
 
 This command will preprocess the training and validation data, build the source and target vocabularies, and save the preprocessed data based on the settings specified in the `config_pos.yaml` file. The `-n_sample 10000` option specifies that the vocabulary should be built by sampling 10,000 examples from the training data.
 
+<br />
 
-
-### Training
+### Train
 
 To train the machine translation model with linguistic features, run the following command:
 
@@ -117,6 +125,9 @@ onmt_train -config config_pos.yaml -n_features 1 -early_stopping 5 -early_stoppi
 - `-early_stopping_criteria accuracy`: This specifies that the early stopping criterion is based on the accuracy metric.
 
 Using the configuration file and these additional options, the training process will incorporate the linguistic features and stop early if the validation accuracy does not improve after a certain number of steps, helping to prevent overfitting.
+<br />
+
+
 
 ### Translation
 
@@ -134,12 +145,15 @@ onmt_translate -model config_pos/run/model/_step_1000.pt -src path/to/source/fil
 - `-n_features 1`: This indicates that the source sentences have one additional linguistic feature (POS tags) that needs to be considered during translation.
 
 With this command, you can translate new source sentences using the trained model, incorporating the linguistic features for improved translation quality.
+<br />
 
 
 
 ## Evaluation
 
 For evaluating the translation quality, we employ the widely-used BLEU (Bilingual Evaluation Understudy) metric, which measures the similarity between the machine translation output and reference human translations. We use the `sacrebleu` library to calculate the BLEU score.
+<br />
+
 
 ### Installing sacrebleu
 
@@ -148,6 +162,9 @@ To install `sacrebleu`, run the following command:
 ```
 pip install sacrebleu
 ```
+<br />
+
+
 
 ### Applying sacrebleu
 
