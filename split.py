@@ -1,45 +1,4 @@
-# import os
-# import shutil
-
-# def split_dataset(input_file_fr, input_file_en, output_dir, train_ratio=0.6, val_ratio=0.2, test_ratio=0.2):
-#     # Calculate total number of lines
-#     total_lines = sum(1 for line in open(input_file_fr))
-
-#     # Calculate number of lines for train, val, and test
-#     train_lines = int(total_lines * train_ratio)
-#     val_lines = int(total_lines * val_ratio)
-#     test_lines = total_lines - train_lines - val_lines
-
-#     # Create directories for train, val, and test
-#     os.makedirs(output_dir, exist_ok=True)
-#     train_dir = os.path.join(output_dir, 'train')
-#     val_dir = os.path.join(output_dir, 'val')
-#     test_dir = os.path.join(output_dir, 'test')
-#     os.makedirs(train_dir, exist_ok=True)
-#     os.makedirs(val_dir, exist_ok=True)
-#     os.makedirs(test_dir, exist_ok=True)
-
-#     # Copy lines to train set
-#     copy_lines(input_file_fr, train_dir, 0, train_lines)
-#     copy_lines(input_file_en, train_dir, 0, train_lines)
-
-#     # Copy lines to val set
-#     copy_lines(input_file_fr, val_dir, train_lines, train_lines + val_lines)
-#     copy_lines(input_file_en, val_dir, train_lines, train_lines + val_lines)
-
-#     # Copy lines to test set
-#     copy_lines(input_file_fr, test_dir, train_lines + val_lines, total_lines)
-#     copy_lines(input_file_en, test_dir, train_lines + val_lines, total_lines)
-
-# def copy_lines(input_file, output_dir, start_line, end_line):
-#     with open(input_file, 'r') as infile:
-#         lines = infile.readlines()[start_line:end_line]
-#         with open(os.path.join(output_dir, os.path.basename(input_file)), 'a') as outfile:
-#             outfile.writelines(lines)
-
-# # Example usage:
-# split_dataset('pos.fr', 'en-fr/train.en', 'split_dataset_pos')
-
+import argparse
 import os
 import shutil
 import random
@@ -93,5 +52,17 @@ def copy_lines(lines, output_dir):
             f_fr.write(line_fr)
             f_en.write(line_en)
 
-# Example usage:
-split_dataset('short/pos_short.fr', 'short/train_short.en', 'split_dataset_pos', seed=42)
+if __name__ == "__main__":
+    # Set up command-line argument parsing
+    parser = argparse.ArgumentParser(description="Split dataset into train, val, and test sets")
+    parser.add_argument("input_file_fr", type=str, help="Path to the input French file")
+    parser.add_argument("input_file_en", type=str, help="Path to the input English file")
+    parser.add_argument("output_dir", type=str, help="Path to the output directory")
+    parser.add_argument("--train_ratio", type=float, default=0.6, help="Ratio of the dataset to use for training")
+    parser.add_argument("--val_ratio", type=float, default=0.2, help="Ratio of the dataset to use for validation")
+    parser.add_argument("--test_ratio", type=float, default=0.2, help="Ratio of the dataset to use for testing")
+    parser.add_argument("--seed", type=int, default=None, help="Seed for shuffling the dataset")
+    args = parser.parse_args()
+
+    # Call the function with provided file paths and arguments
+    split_dataset(args.input_file_fr, args.input_file_en, args.output_dir, args.train_ratio, args.val_ratio, args.test_ratio, args.seed)
