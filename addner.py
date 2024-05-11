@@ -1,3 +1,4 @@
+import argparse
 import spacy
 from tqdm import tqdm
 
@@ -28,9 +29,12 @@ def extract_ner_and_append(input_file, output_file):
             f_output.write(modified_text.rstrip() + '\n')
 
 
+if __name__ == "__main__":
+    # Set up command-line argument parsing
+    parser = argparse.ArgumentParser(description="Extract NER and append to text")
+    parser.add_argument("input_file", type=str, help="Path to the input file")
+    parser.add_argument("output_file", type=str, help="Path to save the modified file")
+    args = parser.parse_args()
 
-# Example usage:
-source_path = "tokenized.fr"  # Path to the input file
-save_path = "ner.fr"   # Path to save the modified file
-
-extract_ner_and_append(source_path, save_path)
+    # Call the function with provided file paths
+    extract_ner_and_append(args.input_file, args.output_file)
