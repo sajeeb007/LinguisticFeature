@@ -1,3 +1,4 @@
+import sys
 import nltk
 from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
@@ -39,8 +40,14 @@ def tokenize_dataset_file(input_file, output_file):
     
     print(f"Tokenized data saved to: {output_file}")
 
-# Example usage
-input_file = 'en-fr/train.fr'
-output_file = 'en-fr/tokenized.fr'
+# Check if input and output file paths are provided via CLI arguments
+if len(sys.argv) != 3:
+    print("Usage: python tokenize_dataset.py <input_file> <output_file>")
+    sys.exit(1)
+
+# Get input and output file paths from CLI arguments
+input_file = sys.argv[1]
+output_file = sys.argv[2]
+
+# Tokenize the dataset file
 tokenize_dataset_file(input_file, output_file)
- 
