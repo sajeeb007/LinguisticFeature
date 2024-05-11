@@ -12,6 +12,7 @@ The core idea is to enrich the input sentences with additional linguistic inform
 
 This repository contains the following main components:
 
+- `french_tokenize.py`: A script to tokenize the french sentences
 - `addpos.py`: A script to add POS tags to the source (French) sentences.
 - `addner.py`: A script to perform named entity recognition (NER) on the source sentences and annotate them accordingly.
 - `split.py`: A utility script to split the dataset into training, validation, and test sets.
@@ -23,6 +24,10 @@ Additionally, the repository includes the dataset used in this research, which i
 In the following sections, we will provide more details on how to use these scripts, install the required dependencies, and reproduce the experiments from the thesis.
 
 <br />
+
+## Tokenize French Sentences
+
+
 
 ## Adding POS Tags
 
