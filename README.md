@@ -26,7 +26,11 @@ In the following sections, we will provide more details on how to use these scri
 <br />
 
 ## Tokenize French Sentences
+This script tokenizes the french sentences.
 
+```
+python french_tokenize.py <input_file> <output_file>
+```
 
 
 ## Adding POS Tags
@@ -68,10 +72,11 @@ In this example, the named entities "Paris" and "France" are annotated with the 
 To split the dataset into training, validation, and test sets, run the `split.py` script:
 
 ```
-python split.py --input_file /path/to/input/file --train_output /path/to/train/output --val_output /path/to/val/output --test_output /path/to/test/output
+python split.py source/file/path target/file/path path/to/store/the/result --train_ratio 0.6 --val_ratio 0.2 --test_ratio 0.2 --seed 42
+
 ```
 
-This script will split the input file into three separate files for training, validation, and testing, respectively. The `--train_output`, `--val_output`, and `--test_output` arguments specify the output file paths for each set.
+This script will split the input file into three separate files for training, validation, and testing, respectively. The `--train_ratio`, `--val_ratio`, and `--test_ratio` arguments specify the amount of split.
 
 
 
