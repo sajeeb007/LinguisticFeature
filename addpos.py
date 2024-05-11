@@ -1,3 +1,4 @@
+import argparse
 import spacy
 from tqdm import tqdm
 
@@ -27,8 +28,13 @@ def extract_pos_and_append(input_file, output_file):
             # Write the modified text with POS tags appended to the output file
             f_output.write(modified_text.rstrip() + '\n')
 
-# Example usage:
-source_path = "en-fr/tokenized.fr"  # Path to the input file
-save_path = "pos.fr"   # Path to save the modified file
 
-extract_pos_and_append(source_path, save_path)
+if __name__ == "__main__":
+    # Set up command-line argument parsing
+    parser = argparse.ArgumentParser(description="Extract POS tags and append to text")
+    parser.add_argument("input_file", type=str, help="Path to the input file")
+    parser.add_argument("output_file", type=str, help="Path to save the modified file")
+    args = parser.parse_args()
+
+    # Call the function with provided file paths
+    extract_pos_and_append(args.input_file, args.output_file)
